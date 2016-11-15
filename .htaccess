@@ -1,0 +1,27 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+
+    RewriteEngine On
+
+    # Redirect Trailing Slashes...
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+<Files ~ "\.(jpg|jpeg|png|gif)$">
+   order deny,allow
+   allow from all
+</Files>
+order deny,allow
+deny from all
+allow from 84.55.6.6
+allow from 84.203.14.72
+allow from 77.219.144.23
+allow from 94.244.109.8
+</IfModule>

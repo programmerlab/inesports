@@ -1,0 +1,20 @@
+{
+    "name": "chriskonnertz/jobs",
+    "description": "Simple cron job manager",
+    "keywords": ["cron jobs", "laravel"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Chris Konnertz"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "ChrisKonnertz\\Jobs\\": "src/ChrisKonnertz/Jobs"
+        }
+    },
+    "minimum-stability": "dev"
+}
