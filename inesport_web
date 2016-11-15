@@ -1,0 +1,2004 @@
+-- phpMyAdmin SQL Dump
+-- version 4.0.10.14
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost:3306
+-- Generation Time: Nov 15, 2016 at 09:51 PM
+-- Server version: 5.6.34
+-- PHP Version: 5.6.20
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `inesport_web`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `activations`
+--
+
+CREATE TABLE IF NOT EXISTS `activations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `completed` tinyint(1) NOT NULL DEFAULT '0',
+  `completed_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `activations`
+--
+
+INSERT INTO `activations` (`id`, `user_id`, `code`, `completed`, `completed_at`, `created_at`, `updated_at`) VALUES
+(1, 2, 'hnbIGRGPc6YHFFYiWVhyarXf7xNlXyTH', 1, '2016-11-14 15:45:12', '2016-11-14 15:45:12', '2016-11-14 15:45:12'),
+(2, 3, 'EZ5uW4dqYoYE2pgkUGkN24X6Ui6FruOI', 1, '2016-11-15 16:23:31', '2016-11-15 16:23:31', '2016-11-15 16:23:31');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `advertcats`
+--
+
+CREATE TABLE IF NOT EXISTS `advertcats` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `advertcats_creator_id_foreign` (`creator_id`),
+  KEY `advertcats_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `advertcats`
+--
+
+INSERT INTO `advertcats` (`id`, `title`, `creator_id`, `updater_id`, `access_counter`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Default', 1, 1, 0, '2016-11-14 17:44:58', '2016-11-14 17:44:58', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `adverts`
+--
+
+CREATE TABLE IF NOT EXISTS `adverts` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `code` text COLLATE utf8_unicode_ci,
+  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `published` tinyint(1) NOT NULL DEFAULT '0',
+  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `advertcat_id` int(10) unsigned DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `adverts_slug_unique` (`slug`),
+  KEY `adverts_advertcat_id_foreign` (`advertcat_id`),
+  KEY `adverts_creator_id_foreign` (`creator_id`),
+  KEY `adverts_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `awards`
+--
+
+CREATE TABLE IF NOT EXISTS `awards` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `position` int(11) NOT NULL DEFAULT '0',
+  `achieved_at` timestamp NULL DEFAULT NULL,
+  `game_id` int(10) unsigned DEFAULT NULL,
+  `tournament_id` int(10) unsigned DEFAULT NULL,
+  `team_id` int(10) unsigned DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `awards_game_id_foreign` (`game_id`),
+  KEY `awards_tournament_id_foreign` (`tournament_id`),
+  KEY `awards_team_id_foreign` (`team_id`),
+  KEY `awards_creator_id_foreign` (`creator_id`),
+  KEY `awards_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comments`
+--
+
+CREATE TABLE IF NOT EXISTS `comments` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `text` text COLLATE utf8_unicode_ci,
+  `foreign_type` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `foreign_id` int(10) unsigned DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `comments_creator_id_foreign` (`creator_id`),
+  KEY `comments_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`id`, `text`, `foreign_type`, `foreign_id`, `creator_id`, `updater_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Test comment #1', 'news', 1, 2, 2, '2016-11-15 17:15:54', '2016-11-15 17:15:54', NULL),
+(2, 'Test comment #2', 'news', 1, 2, 2, '2016-11-15 17:16:03', '2016-11-15 17:16:03', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `config`
+--
+
+CREATE TABLE IF NOT EXISTS `config` (
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `value` text COLLATE utf8_unicode_ci,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `config`
+--
+
+INSERT INTO `config` (`name`, `value`, `updated_at`) VALUES
+('app.theme', 'PhobosTheme', '2016-11-15 19:13:36'),
+('app.analytics', '', '2016-11-15 19:13:36'),
+('app.https', '1', '2016-11-15 19:13:36'),
+('app.dbBackup', '', '2016-11-15 19:13:36'),
+('auth::registration', '1', '2016-11-15 19:13:36'),
+('forums::reports', '1', NULL),
+('app.twitter', 'ContentifyCMS', '2016-11-15 19:13:36'),
+('app.facebook', 'contentifycms', '2016-11-15 19:13:36'),
+('app.youtube', 'UC2gIIZzySdgxrQ3jM4jmoqQ', '2016-11-15 19:13:36'),
+('app.twitchKey', '', '2016-11-15 19:13:36');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contact_messages`
+--
+
+CREATE TABLE IF NOT EXISTS `contact_messages` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `username` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `text` text COLLATE utf8_unicode_ci NOT NULL,
+  `ip` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `new` tinyint(1) NOT NULL DEFAULT '1',
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `countries`
+--
+
+CREATE TABLE IF NOT EXISTS `countries` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `code` varchar(3) COLLATE utf8_unicode_ci NOT NULL,
+  `icon` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `countries_creator_id_foreign` (`creator_id`),
+  KEY `countries_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=58 ;
+
+--
+-- Dumping data for table `countries`
+--
+
+INSERT INTO `countries` (`id`, `title`, `code`, `icon`, `creator_id`, `updater_id`, `access_counter`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'European Union', 'eu', 'eu.png', 1, 1, 0, NULL, NULL, NULL),
+(2, 'Argentina', 'ar', 'ar.png', 1, 1, 0, NULL, NULL, NULL),
+(3, 'Australia', 'au', 'au.png', 1, 1, 0, NULL, NULL, NULL),
+(4, 'Austria', 'at', 'at.png', 1, 1, 0, NULL, NULL, NULL),
+(5, 'Belgium', 'be', 'be.png', 1, 1, 0, NULL, NULL, NULL),
+(6, 'Bosnia Herzegowina', 'ba', 'ba.png', 1, 1, 0, NULL, NULL, NULL),
+(7, 'Brazil', 'br', 'br.png', 1, 1, 0, NULL, NULL, NULL),
+(8, 'Bulgaria', 'bg', 'bg.png', 1, 1, 0, NULL, NULL, NULL),
+(9, 'Canada', 'ca', 'ca.png', 1, 1, 0, NULL, NULL, NULL),
+(10, 'Chile', 'cl', 'cl.png', 1, 1, 0, NULL, NULL, NULL),
+(11, 'China', 'cn', 'cn.png', 1, 1, 0, NULL, NULL, NULL),
+(12, 'Colombia', 'co', 'co.png', 1, 1, 0, NULL, NULL, NULL),
+(13, 'Czech Republic', 'cz', 'cz.png', 1, 1, 0, NULL, NULL, NULL),
+(14, 'Croatia', 'hr', 'hr.png', 1, 1, 0, NULL, NULL, NULL),
+(15, 'Cyprus', 'cy', 'cy.png', 1, 1, 0, NULL, NULL, NULL),
+(16, 'Denmark', 'dk', 'dk.png', 1, 1, 0, NULL, NULL, NULL),
+(17, 'Estonia', 'ee', 'ee.png', 1, 1, 0, NULL, NULL, NULL),
+(18, 'Finland', 'fi', 'fi.png', 1, 1, 0, NULL, NULL, NULL),
+(19, 'Faroe Islands', 'fo', 'fo.png', 1, 1, 0, NULL, NULL, NULL),
+(20, 'France', 'fr', 'fr.png', 1, 1, 0, NULL, NULL, NULL),
+(21, 'Germany', 'de', 'de.png', 1, 1, 0, NULL, NULL, NULL),
+(22, 'Greece', 'gr', 'gr.png', 1, 1, 0, NULL, NULL, NULL),
+(23, 'Hungary', 'hu', 'hu.png', 1, 1, 0, NULL, NULL, NULL),
+(24, 'Iceland', 'is', 'is.png', 1, 1, 0, NULL, NULL, NULL),
+(25, 'Ireland', 'ie', 'ie.png', 1, 1, 0, NULL, NULL, NULL),
+(26, 'Israel', 'il', 'il.png', 1, 1, 0, NULL, NULL, NULL),
+(27, 'Italy', 'it', 'it.png', 1, 1, 0, NULL, NULL, NULL),
+(28, 'Japan', 'jp', 'jp.png', 1, 1, 0, NULL, NULL, NULL),
+(29, 'Korea', 'kr', 'kr.png', 1, 1, 0, NULL, NULL, NULL),
+(30, 'Latvia', 'lv', 'lv.png', 1, 1, 0, NULL, NULL, NULL),
+(31, 'Lithuania', 'lt', 'lt.png', 1, 1, 0, NULL, NULL, NULL),
+(32, 'Luxemburg', 'lu', 'lu.png', 1, 1, 0, NULL, NULL, NULL),
+(33, 'Malaysia', 'my', 'my.png', 1, 1, 0, NULL, NULL, NULL),
+(34, 'Malta', 'mt', 'mt.png', 1, 1, 0, NULL, NULL, NULL),
+(35, 'Netherlands', 'nl', 'nl.png', 1, 1, 0, NULL, NULL, NULL),
+(36, 'Mexico', 'mx', 'mx.png', 1, 1, 0, NULL, NULL, NULL),
+(37, 'Mongolia', 'mn', 'mn.png', 1, 1, 0, NULL, NULL, NULL),
+(38, 'New Zealand', 'nz', 'nz.png', 1, 1, 0, NULL, NULL, NULL),
+(39, 'Norway', 'no', 'no.png', 1, 1, 0, NULL, NULL, NULL),
+(40, 'Poland', 'pl', 'pl.png', 1, 1, 0, NULL, NULL, NULL),
+(41, 'Portugal', 'pt', 'pt.png', 1, 1, 0, NULL, NULL, NULL),
+(42, 'Romania', 'ro', 'ro.png', 1, 1, 0, NULL, NULL, NULL),
+(43, 'Russian Federation', 'ru', 'ru.png', 1, 1, 0, NULL, NULL, NULL),
+(44, 'Singapore', 'sg', 'sg.png', 1, 1, 0, NULL, NULL, NULL),
+(45, 'Slovak Republic', 'sk', 'sk.png', 1, 1, 0, NULL, NULL, NULL),
+(46, 'Slovenia', 'si', 'si.png', 1, 1, 0, NULL, NULL, NULL),
+(47, 'Taiwan', 'tw', 'tw.png', 1, 1, 0, NULL, NULL, NULL),
+(48, 'South Africa', 'za', 'za.png', 1, 1, 0, NULL, NULL, NULL),
+(49, 'Spain', 'es', 'es.png', 1, 1, 0, NULL, NULL, NULL),
+(50, 'Sweden', 'se', 'se.png', 1, 1, 0, NULL, NULL, NULL),
+(51, 'Syria', 'sy', 'sy.png', 1, 1, 0, NULL, NULL, NULL),
+(52, 'Switzerland', 'ch', 'ch.png', 1, 1, 0, NULL, NULL, NULL),
+(53, 'Tunisia', 'tn', 'tn.png', 1, 1, 0, NULL, NULL, NULL),
+(54, 'Turkey', 'tr', 'tr.png', 1, 1, 0, NULL, NULL, NULL),
+(55, 'Ukraine', 'ua', 'ua.png', 1, 1, 0, NULL, NULL, NULL),
+(56, 'United Kingdom', 'uk', 'uk.png', 1, 1, 0, NULL, NULL, NULL),
+(57, 'USA', 'us', 'us.png', 1, 1, 0, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cups`
+--
+
+CREATE TABLE IF NOT EXISTS `cups` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `rulebook` text COLLATE utf8_unicode_ci,
+  `players_per_team` int(11) NOT NULL,
+  `slots` int(11) NOT NULL,
+  `prize` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `join_at` timestamp NULL DEFAULT NULL,
+  `check_in_at` timestamp NULL DEFAULT NULL,
+  `start_at` timestamp NULL DEFAULT NULL,
+  `featured` tinyint(1) NOT NULL DEFAULT '0',
+  `published` tinyint(1) NOT NULL DEFAULT '0',
+  `closed` tinyint(1) NOT NULL DEFAULT '0',
+  `game_id` int(10) unsigned DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cups_slug_unique` (`slug`),
+  KEY `cups_game_id_foreign` (`game_id`),
+  KEY `cups_creator_id_foreign` (`creator_id`),
+  KEY `cups_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cups_matches`
+--
+
+CREATE TABLE IF NOT EXISTS `cups_matches` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `round` int(11) NOT NULL,
+  `row` int(11) NOT NULL,
+  `with_teams` tinyint(1) NOT NULL,
+  `left_participant_id` int(11) NOT NULL,
+  `right_participant_id` int(11) NOT NULL,
+  `winner_id` int(11) NOT NULL DEFAULT '0',
+  `next_match_id` int(11) NOT NULL DEFAULT '0',
+  `left_score` int(11) NOT NULL DEFAULT '0',
+  `right_score` int(11) NOT NULL DEFAULT '0',
+  `left_confirmed` tinyint(1) NOT NULL DEFAULT '0',
+  `right_confirmed` tinyint(1) NOT NULL DEFAULT '0',
+  `cup_id` int(10) unsigned DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cups_matches_cup_id_foreign` (`cup_id`),
+  KEY `cups_matches_creator_id_foreign` (`creator_id`),
+  KEY `cups_matches_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cups_participants`
+--
+
+CREATE TABLE IF NOT EXISTS `cups_participants` (
+  `cup_id` int(11) NOT NULL,
+  `participant_id` int(11) NOT NULL,
+  `checked_in` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`cup_id`,`participant_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cups_referees`
+--
+
+CREATE TABLE IF NOT EXISTS `cups_referees` (
+  `cup_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`cup_id`,`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cups_teams`
+--
+
+CREATE TABLE IF NOT EXISTS `cups_teams` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `hidden` tinyint(1) NOT NULL DEFAULT '0',
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cups_teams_slug_unique` (`slug`),
+  KEY `cups_teams_creator_id_foreign` (`creator_id`),
+  KEY `cups_teams_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cups_team_members`
+--
+
+CREATE TABLE IF NOT EXISTS `cups_team_members` (
+  `team_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `organizer` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`team_id`,`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cups_users`
+--
+
+CREATE TABLE IF NOT EXISTS `cups_users` (
+  `cup_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `cup_closed` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`cup_id`,`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `downloadcats`
+--
+
+CREATE TABLE IF NOT EXISTS `downloadcats` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `downloadcats_slug_unique` (`slug`),
+  KEY `downloadcats_creator_id_foreign` (`creator_id`),
+  KEY `downloadcats_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `downloadcats`
+--
+
+INSERT INTO `downloadcats` (`id`, `title`, `slug`, `creator_id`, `updater_id`, `access_counter`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Default', '', 1, 1, 0, '2016-11-14 17:44:58', '2016-11-14 17:44:58', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `downloads`
+--
+
+CREATE TABLE IF NOT EXISTS `downloads` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `file` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `file_size` int(11) NOT NULL DEFAULT '0',
+  `is_image` tinyint(1) NOT NULL DEFAULT '0',
+  `downloadcat_id` int(10) unsigned DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `downloads_slug_unique` (`slug`),
+  KEY `downloads_downloadcat_id_foreign` (`downloadcat_id`),
+  KEY `downloads_creator_id_foreign` (`creator_id`),
+  KEY `downloads_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `events`
+--
+
+CREATE TABLE IF NOT EXISTS `events` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `text` text COLLATE utf8_unicode_ci,
+  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `location` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `starts_at` timestamp NULL DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `events_slug_unique` (`slug`),
+  KEY `events_creator_id_foreign` (`creator_id`),
+  KEY `events_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `forums`
+--
+
+CREATE TABLE IF NOT EXISTS `forums` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `position` int(11) NOT NULL DEFAULT '0',
+  `internal` tinyint(1) NOT NULL DEFAULT '0',
+  `level` int(11) NOT NULL DEFAULT '0',
+  `threads_count` int(11) NOT NULL DEFAULT '0',
+  `posts_count` int(11) NOT NULL DEFAULT '0',
+  `forum_id` int(10) unsigned DEFAULT NULL,
+  `latest_thread_id` int(10) unsigned DEFAULT NULL,
+  `team_id` int(10) unsigned DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `forums_slug_unique` (`slug`),
+  KEY `forums_forum_id_foreign` (`forum_id`),
+  KEY `forums_latest_thread_id_foreign` (`latest_thread_id`),
+  KEY `forums_team_id_foreign` (`team_id`),
+  KEY `forums_creator_id_foreign` (`creator_id`),
+  KEY `forums_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `forum_posts`
+--
+
+CREATE TABLE IF NOT EXISTS `forum_posts` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `text` text COLLATE utf8_unicode_ci,
+  `root` tinyint(1) NOT NULL DEFAULT '0',
+  `thread_id` int(10) unsigned DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `forum_posts_thread_id_foreign` (`thread_id`),
+  KEY `forum_posts_creator_id_foreign` (`creator_id`),
+  KEY `forum_posts_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `forum_reports`
+--
+
+CREATE TABLE IF NOT EXISTS `forum_reports` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `text` text COLLATE utf8_unicode_ci,
+  `post_id` int(10) unsigned DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `forum_reports_post_id_foreign` (`post_id`),
+  KEY `forum_reports_creator_id_foreign` (`creator_id`),
+  KEY `forum_reports_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `forum_threads`
+--
+
+CREATE TABLE IF NOT EXISTS `forum_threads` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `posts_count` int(11) NOT NULL DEFAULT '1',
+  `sticky` tinyint(1) NOT NULL DEFAULT '0',
+  `closed` tinyint(1) NOT NULL DEFAULT '0',
+  `forum_id` int(10) unsigned DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `forum_threads_slug_unique` (`slug`),
+  KEY `forum_threads_forum_id_foreign` (`forum_id`),
+  KEY `forum_threads_creator_id_foreign` (`creator_id`),
+  KEY `forum_threads_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `friends`
+--
+
+CREATE TABLE IF NOT EXISTS `friends` (
+  `sender_id` int(10) unsigned NOT NULL,
+  `receiver_id` int(10) unsigned NOT NULL,
+  `confirmed` tinyint(1) NOT NULL DEFAULT '0',
+  `messaged_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`sender_id`,`receiver_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `galleries`
+--
+
+CREATE TABLE IF NOT EXISTS `galleries` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `galleries_slug_unique` (`slug`),
+  KEY `galleries_creator_id_foreign` (`creator_id`),
+  KEY `galleries_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `games`
+--
+
+CREATE TABLE IF NOT EXISTS `games` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `short` varchar(6) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `icon` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `games_creator_id_foreign` (`creator_id`),
+  KEY `games_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=21 ;
+
+--
+-- Dumping data for table `games`
+--
+
+INSERT INTO `games` (`id`, `title`, `short`, `icon`, `creator_id`, `updater_id`, `access_counter`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Counter-Strike: Global Offensive', 'CS:GO', 'default/csgo.png', 1, 1, 0, NULL, NULL, NULL),
+(2, 'Counter-Strike: Source', 'CS:S', 'default/css.gif', 1, 1, 0, NULL, NULL, NULL),
+(3, 'Counter-Strike 1.6', 'CS', 'default/cs.gif', 1, 1, 0, NULL, NULL, NULL),
+(4, 'Call of Duty', 'CoD', 'default/cod.png', 1, 1, 0, NULL, NULL, NULL),
+(5, 'Battlefield', 'BF', 'default/bf.png', 1, 1, 0, NULL, NULL, NULL),
+(6, 'Unreal Tournament 3', 'UT3', 'default/ut3.png', 1, 1, 0, NULL, NULL, NULL),
+(7, 'Left 4 Dead', 'L4D', 'default/l4d.png', 1, 1, 0, NULL, NULL, NULL),
+(8, 'Crysis', 'Crysis', 'default/crysis.png', 1, 1, 0, NULL, NULL, NULL),
+(9, 'Quake', 'Quake', 'default/quake.gif', 1, 1, 0, NULL, NULL, NULL),
+(10, 'StarCraft II', 'SC2', 'default/sc2.png', 1, 1, 0, NULL, NULL, NULL),
+(11, 'Warcraft III', 'WC3', 'default/wc3.gif', 1, 1, 0, NULL, NULL, NULL),
+(12, 'Diablo III', 'D3', 'default/d3.png', 1, 1, 0, NULL, NULL, NULL),
+(13, 'DotA 2', 'DotA', 'default/dota2.png', 1, 1, 0, NULL, NULL, NULL),
+(14, 'League of Legends', 'LoL', 'default/lol.png', 1, 1, 0, NULL, NULL, NULL),
+(15, 'Heroes of the Storm', 'HotS', 'default/hots.png', 1, 1, 0, NULL, NULL, NULL),
+(16, 'World of Warcraft', 'WoW', 'default/wow.png', 1, 1, 0, NULL, NULL, NULL),
+(17, 'World of Tanks', 'WoT', 'default/wot.png', 1, 1, 0, NULL, NULL, NULL),
+(18, 'Trackmania', 'TM', 'default/tm.gif', 1, 1, 0, NULL, NULL, NULL),
+(19, 'FIFA', 'FIFA', 'default/fifa.gif', 1, 1, 0, NULL, NULL, NULL),
+(20, 'Minecraft', 'MS', 'default/mc.png', 1, 1, 0, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `images`
+--
+
+CREATE TABLE IF NOT EXISTS `images` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `tags` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `width` int(11) NOT NULL DEFAULT '0',
+  `height` int(11) NOT NULL DEFAULT '0',
+  `gallery_id` int(10) unsigned DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `images_gallery_id_foreign` (`gallery_id`),
+  KEY `images_creator_id_foreign` (`creator_id`),
+  KEY `images_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `languages`
+--
+
+CREATE TABLE IF NOT EXISTS `languages` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `code` varchar(2) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `languages`
+--
+
+INSERT INTO `languages` (`id`, `title`, `code`) VALUES
+(1, 'English', 'en'),
+(2, 'Deutsch', 'de'),
+(3, 'Francais', 'fr');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `maps`
+--
+
+CREATE TABLE IF NOT EXISTS `maps` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `game_id` int(10) unsigned DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `maps_game_id_foreign` (`game_id`),
+  KEY `maps_creator_id_foreign` (`creator_id`),
+  KEY `maps_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=12 ;
+
+--
+-- Dumping data for table `maps`
+--
+
+INSERT INTO `maps` (`id`, `title`, `image`, `game_id`, `creator_id`, `updater_id`, `access_counter`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Unknown', 'unknown.jpg', NULL, 1, 1, 0, NULL, NULL, NULL),
+(2, 'de_dust', 'cs_dust.jpg', 1, 1, 1, 0, NULL, NULL, NULL),
+(3, 'de_dust2', 'cs_dust2.jpg', 1, 1, 1, 0, NULL, NULL, NULL),
+(4, 'de_inferno', 'cs_inferno.jpg', 1, 1, 1, 0, NULL, NULL, NULL),
+(5, 'de_train', 'cs_train.jpg', 1, 1, 1, 0, NULL, NULL, NULL),
+(6, 'de_cbble', 'cs_cbble.jpg', 1, 1, 1, 0, NULL, NULL, NULL),
+(7, 'de_nuke', 'cs_nuke.jpg', 1, 1, 1, 0, NULL, NULL, NULL),
+(8, 'de_cache', 'cs_cache.jpg', 1, 1, 1, 0, NULL, NULL, NULL),
+(9, 'de_mirage', 'cs_mirage.jpg', 1, 1, 1, 0, NULL, NULL, NULL),
+(10, 'de_season', 'cs_season.jpg', 1, 1, 1, 0, NULL, NULL, NULL),
+(11, 'de_overpass', 'cs_overpass.jpg', 1, 1, 1, 0, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `matches`
+--
+
+CREATE TABLE IF NOT EXISTS `matches` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `state` int(11) NOT NULL DEFAULT '0',
+  `featured` tinyint(1) NOT NULL DEFAULT '0',
+  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `broadcast` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `left_lineup` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `right_lineup` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `text` text COLLATE utf8_unicode_ci NOT NULL,
+  `played_at` timestamp NULL DEFAULT NULL,
+  `left_score` int(11) NOT NULL DEFAULT '0',
+  `right_score` int(11) NOT NULL DEFAULT '0',
+  `left_team_id` int(10) unsigned DEFAULT NULL,
+  `right_team_id` int(10) unsigned DEFAULT NULL,
+  `game_id` int(10) unsigned DEFAULT NULL,
+  `tournament_id` int(10) unsigned DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `matches_left_team_id_foreign` (`left_team_id`),
+  KEY `matches_right_team_id_foreign` (`right_team_id`),
+  KEY `matches_game_id_foreign` (`game_id`),
+  KEY `matches_tournament_id_foreign` (`tournament_id`),
+  KEY `matches_creator_id_foreign` (`creator_id`),
+  KEY `matches_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `match_scores`
+--
+
+CREATE TABLE IF NOT EXISTS `match_scores` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `left_score` int(11) NOT NULL DEFAULT '0',
+  `right_score` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `match_id` int(10) unsigned DEFAULT NULL,
+  `map_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `match_scores_match_id_foreign` (`match_id`),
+  KEY `match_scores_map_id_foreign` (`map_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `messages`
+--
+
+CREATE TABLE IF NOT EXISTS `messages` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `text` text COLLATE utf8_unicode_ci NOT NULL,
+  `new` tinyint(1) NOT NULL DEFAULT '1',
+  `creator_visible` tinyint(1) NOT NULL DEFAULT '1',
+  `receiver_visible` tinyint(1) NOT NULL DEFAULT '1',
+  `sent_by_system` tinyint(1) NOT NULL DEFAULT '0',
+  `receiver_id` int(10) unsigned DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `messages_slug_unique` (`slug`),
+  KEY `messages_receiver_id_foreign` (`receiver_id`),
+  KEY `messages_creator_id_foreign` (`creator_id`),
+  KEY `messages_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `migration` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`migration`, `batch`) VALUES
+('2014_07_02_230147_migration_cartalyst_sentinel', 1),
+('2015_12_14_000000_add_username', 2),
+('2015_12_14_000001_create_user_profile', 2),
+('2015_12_14_000002_add_roles_updater', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `navigations`
+--
+
+CREATE TABLE IF NOT EXISTS `navigations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `items` text COLLATE utf8_unicode_ci,
+  `translate` tinyint(1) NOT NULL DEFAULT '0',
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `navigations_creator_id_foreign` (`creator_id`),
+  KEY `navigations_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `news`
+--
+
+CREATE TABLE IF NOT EXISTS `news` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `summary` text COLLATE utf8_unicode_ci,
+  `text` text COLLATE utf8_unicode_ci,
+  `published` tinyint(1) NOT NULL DEFAULT '0',
+  `published_at` timestamp NULL DEFAULT NULL,
+  `internal` tinyint(1) NOT NULL DEFAULT '0',
+  `enable_comments` tinyint(1) NOT NULL DEFAULT '0',
+  `newscat_id` int(10) unsigned DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `news_slug_unique` (`slug`),
+  KEY `news_newscat_id_foreign` (`newscat_id`),
+  KEY `news_creator_id_foreign` (`creator_id`),
+  KEY `news_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `news`
+--
+
+INSERT INTO `news` (`id`, `title`, `slug`, `summary`, `text`, `published`, `published_at`, `internal`, `enable_comments`, `newscat_id`, `creator_id`, `updater_id`, `access_counter`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Test new title', 'test-new-title', '<p>Hello this is test news</p>\r\n', '', 1, '2016-11-15 17:15:30', 0, 1, 1, 2, 2, 7, '2016-11-15 17:15:43', '2016-11-15 17:51:14', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `newscats`
+--
+
+CREATE TABLE IF NOT EXISTS `newscats` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `newscats_creator_id_foreign` (`creator_id`),
+  KEY `newscats_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `newscats`
+--
+
+INSERT INTO `newscats` (`id`, `title`, `image`, `creator_id`, `updater_id`, `access_counter`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Default', NULL, 1, 1, 0, '2016-11-14 17:44:58', '2016-11-14 17:44:58', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `opponents`
+--
+
+CREATE TABLE IF NOT EXISTS `opponents` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `short` varchar(6) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `lineup` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `country_id` int(10) unsigned DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `opponents_slug_unique` (`slug`),
+  KEY `opponents_country_id_foreign` (`country_id`),
+  KEY `opponents_creator_id_foreign` (`creator_id`),
+  KEY `opponents_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `opponents`
+--
+
+INSERT INTO `opponents` (`id`, `title`, `slug`, `short`, `url`, `lineup`, `image`, `country_id`, `creator_id`, `updater_id`, `access_counter`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'To Be Announced', 'tba', 'TBA', NULL, NULL, NULL, 1, 1, 1, 0, '2016-11-14 17:44:58', '2016-11-14 17:44:58', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pagecats`
+--
+
+CREATE TABLE IF NOT EXISTS `pagecats` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pagecats_creator_id_foreign` (`creator_id`),
+  KEY `pagecats_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `pagecats`
+--
+
+INSERT INTO `pagecats` (`id`, `title`, `creator_id`, `updater_id`, `access_counter`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Blog Post', 1, 1, 0, NULL, NULL, NULL),
+(2, 'Custom Page', 1, 1, 0, NULL, NULL, NULL),
+(3, 'Custom Content', 1, 1, 0, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pages`
+--
+
+CREATE TABLE IF NOT EXISTS `pages` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `text` text COLLATE utf8_unicode_ci,
+  `published` tinyint(1) NOT NULL DEFAULT '0',
+  `published_at` timestamp NULL DEFAULT NULL,
+  `internal` tinyint(1) NOT NULL DEFAULT '0',
+  `enable_comments` tinyint(1) NOT NULL DEFAULT '0',
+  `pagecat_id` int(10) unsigned DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `pages_slug_unique` (`slug`),
+  KEY `pages_pagecat_id_foreign` (`pagecat_id`),
+  KEY `pages_creator_id_foreign` (`creator_id`),
+  KEY `pages_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `pages`
+--
+
+INSERT INTO `pages` (`id`, `title`, `slug`, `text`, `published`, `published_at`, `internal`, `enable_comments`, `pagecat_id`, `creator_id`, `updater_id`, `access_counter`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Impressum', 'impressum', '<h2>Privacy Statement</h2><h3>General</h3>Your personal data (e.g. title, name, house address, e-mail address, phone \n    number, bank details, credit card number) are processed by us only in accordance with the provisions of German data \nprivacy laws. The following provisions describe the type, scope and purpose of collecting, processing and utilizing \npersonal data. This data privacy policy applies only to our web pages. If links on our pages route you to other pages, \nplease inquire there about how your data are handled in such cases.<br><h3>Inventory data</h3>(1) Your personal data, \ninsofar as these are necessary for this contractual relationship (inventory data) in terms of its establishment, \norganization of content and modifications, are used exclusively for fulfilling the contract. For goods to be delivered, \nfor instance, your name and address must be relayed to the supplier of the goods. <br>(2) Without your explicit \n    consent or a legal basis, your personal data are not passed on to third parties outside the scope of fulfilling \nthis contract. After completion of the contract, your data are blocked against further use. After expiry of deadlines \nas per tax-related and commercial regulations, these data are deleted unless you have expressly consented to their \nfurther use.<br><h3>Disclosure</h3>According to the Federal Data Protection Act, you have a right to free-of-charge \ninformation about your stored data, and possibly entitlement to correction, blocking or deletion of such data. \n<br><br><i>From: </i><a href="http://www.twigg.de/" target="_blank">http://www.twigg.de/</a>', 1, NULL, 0, 0, 2, 1, 1, 0, '2016-11-14 17:44:58', '2016-11-14 17:44:58', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `partnercats`
+--
+
+CREATE TABLE IF NOT EXISTS `partnercats` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `partnercats_creator_id_foreign` (`creator_id`),
+  KEY `partnercats_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `partnercats`
+--
+
+INSERT INTO `partnercats` (`id`, `title`, `creator_id`, `updater_id`, `access_counter`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Default', 1, 1, 0, '2016-11-14 17:44:58', '2016-11-14 17:44:58', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `partners`
+--
+
+CREATE TABLE IF NOT EXISTS `partners` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `text` text COLLATE utf8_unicode_ci,
+  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `position` int(11) NOT NULL DEFAULT '0',
+  `published` tinyint(1) NOT NULL DEFAULT '0',
+  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `partnercat_id` int(10) unsigned DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `partners_slug_unique` (`slug`),
+  KEY `partners_partnercat_id_foreign` (`partnercat_id`),
+  KEY `partners_creator_id_foreign` (`creator_id`),
+  KEY `partners_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `persistences`
+--
+
+CREATE TABLE IF NOT EXISTS `persistences` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `persistences_code_unique` (`code`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `persistences`
+--
+
+INSERT INTO `persistences` (`id`, `user_id`, `code`, `created_at`, `updated_at`) VALUES
+(3, 2, 'LBVzzBKBb5RGHI9IDMxElUQGHqy4feXX', '2016-11-15 17:15:13', '2016-11-15 17:15:13'),
+(4, 2, '11ZI0XzR8hSXEN37lYQ5V5e2vyM7tycN', '2016-11-15 17:15:23', '2016-11-15 17:15:23'),
+(5, 2, 'Bff8WUuEDpxBzkB98uAJDb3VPI1E884I', '2016-11-15 17:20:24', '2016-11-15 17:20:24');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ratings`
+--
+
+CREATE TABLE IF NOT EXISTS `ratings` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `rating` int(11) NOT NULL,
+  `foreign_type` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `foreign_id` int(10) unsigned DEFAULT NULL,
+  `user_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ratings_user_id_foreign` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reminders`
+--
+
+CREATE TABLE IF NOT EXISTS `reminders` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `completed` tinyint(1) NOT NULL DEFAULT '0',
+  `completed_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `reminders`
+--
+
+INSERT INTO `reminders` (`id`, `user_id`, `code`, `completed`, `completed_at`, `created_at`, `updated_at`) VALUES
+(1, 2, 'MIpVBQv7xosR1T1c8P09o9zeCOfxRWcm', 1, '2016-11-15 16:25:22', '2016-11-15 16:24:59', '2016-11-15 16:25:22'),
+(2, 2, 'MSJddz1Mh0nU2K7HTbul4HfHvAyXJImL', 1, '2016-11-15 17:13:11', '2016-11-15 17:13:06', '2016-11-15 17:13:11');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+--
+
+CREATE TABLE IF NOT EXISTS `roles` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `permissions` text COLLATE utf8_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `creator_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `updater_id` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `roles_slug_unique` (`slug`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `slug`, `name`, `permissions`, `created_at`, `updated_at`, `creator_id`, `updater_id`) VALUES
+(1, 'visitors', 'Visitors', '', '2016-11-14 15:44:58', '2016-11-14 15:44:58', 0, 0),
+(2, 'users', 'Users', '{"frontend":true,"comments":2,"ratings":2}', '2016-11-14 15:44:58', '2016-11-14 15:44:58', 0, 0),
+(3, 'members', 'Members', '{"frontend":true,"internal":true,"comments":2,"ratings":2}', '2016-11-14 15:44:58', '2016-11-14 15:44:58', 0, 0),
+(4, 'admins', 'Admins', '{"frontend":true,"internal":true,"backend":true,"adverts":4,"auth":4,"awards":4,"comments":4,"config":4,"contact":4,"countries":4,"cups":4,"diag":4,"downloads":4,"events":4,"forums":4,"galleries":4,"games":4,"roles":4,"help":4,"images":4,"maps":4,"matches":4,"modules":1,"navigations":4,"news":4,"opponents":4,"pages":4,"partners":4,"ratings":4,"servers":4,"slides":4,"streams":4,"teams":4,"tournaments":4,"users":4,"videos":4}', '2016-11-14 15:44:58', '2016-11-14 15:44:58', 0, 0),
+(5, 'super-admins', 'Super-Admins', '{"frontend":true,"internal":true,"backend":true,"superadmin":true,"adverts":4,"auth":4,"awards":4,"comments":4,"config":4,"contact":4,"countries":4,"cups":4,"diag":4,"downloads":4,"events":4,"forums":4,"galleries":4,"games":4,"roles":4,"help":4,"images":4,"maps":4,"matches":4,"modules":4,"navigations":4,"news":4,"opponents":4,"pages":4,"partners":4,"ratings":4,"servers":4,"slides":4,"streams":4,"teams":4,"tournaments":4,"users":4,"videos":4}', '2016-11-14 15:44:58', '2016-11-14 15:44:58', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role_users`
+--
+
+CREATE TABLE IF NOT EXISTS `role_users` (
+  `user_id` int(10) unsigned NOT NULL,
+  `role_id` int(10) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`,`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `role_users`
+--
+
+INSERT INTO `role_users` (`user_id`, `role_id`, `created_at`, `updated_at`) VALUES
+(2, 5, '2016-11-14 15:45:12', '2016-11-14 15:45:12'),
+(3, 2, '2016-11-15 16:23:31', '2016-11-15 16:23:31');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `servers`
+--
+
+CREATE TABLE IF NOT EXISTS `servers` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `ip` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `hoster` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `slots` int(11) NOT NULL DEFAULT '0',
+  `published` tinyint(1) NOT NULL DEFAULT '0',
+  `game_id` int(10) unsigned DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `servers_game_id_foreign` (`game_id`),
+  KEY `servers_creator_id_foreign` (`creator_id`),
+  KEY `servers_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shouts`
+--
+
+CREATE TABLE IF NOT EXISTS `shouts` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `text` text COLLATE utf8_unicode_ci,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `shouts_creator_id_foreign` (`creator_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `slidecats`
+--
+
+CREATE TABLE IF NOT EXISTS `slidecats` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `slidecats_creator_id_foreign` (`creator_id`),
+  KEY `slidecats_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `slidecats`
+--
+
+INSERT INTO `slidecats` (`id`, `title`, `creator_id`, `updater_id`, `access_counter`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Default', 1, 1, 0, '2016-11-14 17:44:58', '2016-11-14 17:44:58', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `slides`
+--
+
+CREATE TABLE IF NOT EXISTS `slides` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `text` text COLLATE utf8_unicode_ci,
+  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `position` int(11) NOT NULL DEFAULT '0',
+  `published` tinyint(1) NOT NULL DEFAULT '0',
+  `slidecat_id` int(10) unsigned DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `slides_slidecat_id_foreign` (`slidecat_id`),
+  KEY `slides_creator_id_foreign` (`creator_id`),
+  KEY `slides_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `streams`
+--
+
+CREATE TABLE IF NOT EXISTS `streams` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `permanent_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `provider` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `thumbnail` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `online` tinyint(1) NOT NULL DEFAULT '0',
+  `viewers` int(11) NOT NULL DEFAULT '0',
+  `renewed_at` timestamp NULL DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `streams_slug_unique` (`slug`),
+  KEY `streams_creator_id_foreign` (`creator_id`),
+  KEY `streams_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `teamcats`
+--
+
+CREATE TABLE IF NOT EXISTS `teamcats` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `teamcats_creator_id_foreign` (`creator_id`),
+  KEY `teamcats_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `teamcats`
+--
+
+INSERT INTO `teamcats` (`id`, `title`, `creator_id`, `updater_id`, `access_counter`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Staff', 1, 1, 0, NULL, NULL, NULL),
+(2, 'Gaming', 1, 1, 0, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `teams`
+--
+
+CREATE TABLE IF NOT EXISTS `teams` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `text` text COLLATE utf8_unicode_ci,
+  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `position` int(11) NOT NULL DEFAULT '0',
+  `published` tinyint(1) NOT NULL DEFAULT '0',
+  `teamcat_id` int(10) unsigned DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `teams_slug_unique` (`slug`),
+  KEY `teams_teamcat_id_foreign` (`teamcat_id`),
+  KEY `teams_creator_id_foreign` (`creator_id`),
+  KEY `teams_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `team_user`
+--
+
+CREATE TABLE IF NOT EXISTS `team_user` (
+  `user_id` int(10) unsigned NOT NULL,
+  `team_id` int(10) unsigned NOT NULL,
+  `task` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `position` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`user_id`,`team_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `throttle`
+--
+
+CREATE TABLE IF NOT EXISTS `throttle` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned DEFAULT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `throttle_user_id_index` (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `throttle`
+--
+
+INSERT INTO `throttle` (`id`, `user_id`, `type`, `ip`, `created_at`, `updated_at`) VALUES
+(1, NULL, 'global', NULL, '2016-11-15 17:20:02', '2016-11-15 17:20:02'),
+(2, NULL, 'ip', '94.244.109.8', '2016-11-15 17:20:02', '2016-11-15 17:20:02'),
+(3, NULL, 'global', NULL, '2016-11-15 17:20:18', '2016-11-15 17:20:18'),
+(4, NULL, 'ip', '94.244.109.8', '2016-11-15 17:20:18', '2016-11-15 17:20:18'),
+(5, 2, 'user', NULL, '2016-11-15 17:20:18', '2016-11-15 17:20:18');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tournaments`
+--
+
+CREATE TABLE IF NOT EXISTS `tournaments` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `short` varchar(6) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `icon` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tournaments_creator_id_foreign` (`creator_id`),
+  KEY `tournaments_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `tournaments`
+--
+
+INSERT INTO `tournaments` (`id`, `title`, `short`, `url`, `icon`, `creator_id`, `updater_id`, `access_counter`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Electronic Sports League', 'ESL', NULL, NULL, 1, 1, 0, NULL, NULL, NULL),
+(2, 'E-Sports Entertainment Association', 'ESEA', NULL, NULL, 1, 1, 0, NULL, NULL, NULL),
+(3, 'Major League Gaming', 'MLG', NULL, NULL, 1, 1, 0, NULL, NULL, NULL),
+(4, 'Electronic Sports World Cup', 'ESWC', NULL, NULL, 1, 1, 0, NULL, NULL, NULL),
+(5, 'Dreamhack', 'DH', NULL, NULL, 1, 1, 0, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `permissions` text COLLATE utf8_unicode_ci,
+  `last_login` timestamp NULL DEFAULT NULL,
+  `first_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `username` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `updater_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `banned` tinyint(1) NOT NULL DEFAULT '0',
+  `steam_auth_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_active` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `gender` int(11) DEFAULT '0',
+  `country_id` int(11) NOT NULL DEFAULT '1',
+  `language_id` int(11) NOT NULL DEFAULT '1',
+  `birthdate` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `occupation` text COLLATE utf8_unicode_ci,
+  `website` text COLLATE utf8_unicode_ci,
+  `about` text COLLATE utf8_unicode_ci,
+  `skype` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `facebook` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `twitter` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `steam_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cpu` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `graphics` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ram` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `motherboard` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `drives` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `display` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `mouse` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `keyboard` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `headset` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `mousepad` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `game` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `food` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `drink` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `music` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `film` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `avatar` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `access_counter` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `posts_count` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `signature` text COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`),
+  UNIQUE KEY `users_username_unique` (`username`),
+  UNIQUE KEY `users_slug_unique` (`slug`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `password`, `permissions`, `last_login`, `first_name`, `last_name`, `created_at`, `updated_at`, `username`, `slug`, `updater_id`, `banned`, `steam_auth_id`, `last_active`, `gender`, `country_id`, `language_id`, `birthdate`, `occupation`, `website`, `about`, `skype`, `facebook`, `twitter`, `steam_id`, `cpu`, `graphics`, `ram`, `motherboard`, `drives`, `display`, `mouse`, `keyboard`, `headset`, `mousepad`, `game`, `food`, `drink`, `music`, `film`, `image`, `avatar`, `access_counter`, `posts_count`, `signature`) VALUES
+(1, 'daemon@contentify.org', '$2y$10$yXIKsT9UJd5ovfOebrSXgejsLR/OKeGdez3DQO9SkK/6V.p4rhMGq', NULL, NULL, NULL, NULL, '2016-11-14 15:44:58', '2016-11-14 15:44:58', 'Daemon', 'daemon', 0, 0, NULL, '0000-00-00 00:00:00', 0, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL),
+(2, 'Erikas@inesports.lt', '$2y$10$8.VAA3y8bU6ENDU1u18u2OovX/hYR7xz1BOrF2q7NIZjVXvMW8igS', NULL, '2016-11-15 17:20:24', NULL, NULL, '2016-11-14 15:45:12', '2016-11-15 17:51:12', 'Erikas', 'erikas', 0, 0, NULL, '2016-11-15 17:51:12', 0, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', '0', NULL),
+(3, 'testas@inesports.lt', '$2y$10$MJ2I//FxuNGe208W5r6gNOD0oRYTlMDFUQDcdWw3sy9NdGJo8Wo/S', NULL, '2016-11-15 16:23:31', NULL, NULL, '2016-11-15 16:23:31', '2016-11-15 16:23:34', 'testas', 'testas', 0, 0, NULL, '2016-11-15 16:23:34', 0, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_activities`
+--
+
+CREATE TABLE IF NOT EXISTS `user_activities` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `frontend` tinyint(1) NOT NULL,
+  `model_class` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `info` text COLLATE utf8_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `activity_id` int(11) NOT NULL,
+  `user_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_activities_user_id_foreign` (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `user_activities`
+--
+
+INSERT INTO `user_activities` (`id`, `frontend`, `model_class`, `info`, `created_at`, `updated_at`, `activity_id`, `user_id`) VALUES
+(1, 0, 'App\\Modules\\News\\News', NULL, '2016-11-15 17:15:43', '2016-11-15 17:15:43', 2, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `videos`
+--
+
+CREATE TABLE IF NOT EXISTS `videos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(70) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `permanent_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `provider` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `creator_id` int(10) unsigned DEFAULT NULL,
+  `updater_id` int(10) unsigned DEFAULT NULL,
+  `access_counter` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `videos_slug_unique` (`slug`),
+  KEY `videos_creator_id_foreign` (`creator_id`),
+  KEY `videos_updater_id_foreign` (`updater_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `visits`
+--
+
+CREATE TABLE IF NOT EXISTS `visits` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ip` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `user_agents` int(11) NOT NULL,
+  `visited_at` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=21 ;
+
+--
+-- Dumping data for table `visits`
+--
+
+INSERT INTO `visits` (`id`, `ip`, `user_agents`, `visited_at`) VALUES
+(1, '94.244.109.8', 2, '2016-11-14'),
+(2, '83.190.222.119', 1, '2016-11-14'),
+(3, '88.198.57.242', 2, '2016-11-14'),
+(4, '66.249.66.194', 3, '2016-11-15'),
+(5, '66.249.92.202', 1, '2016-11-15'),
+(6, '94.244.109.8', 5, '2016-11-15'),
+(7, '218.29.102.105', 1, '2016-11-15'),
+(8, '84.55.6.6', 2, '2016-11-15'),
+(9, '66.249.66.218', 2, '2016-11-15'),
+(10, '66.249.66.210', 1, '2016-11-15'),
+(11, '54.218.87.127', 1, '2016-11-15'),
+(12, '139.162.13.205', 1, '2016-11-15'),
+(13, '208.109.249.220', 2, '2016-11-15'),
+(14, '84.203.14.72', 1, '2016-11-15'),
+(15, '66.249.66.74', 1, '2016-11-15'),
+(16, '66.249.66.20', 1, '2016-11-15'),
+(17, '66.249.66.14', 1, '2016-11-15'),
+(18, '83.191.5.174', 1, '2016-11-15'),
+(19, '67.225.139.9', 1, '2016-11-15'),
+(20, '47.247.176.233', 1, '2016-11-15');
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `advertcats`
+--
+ALTER TABLE `advertcats`
+  ADD CONSTRAINT `advertcats_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `advertcats_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `adverts`
+--
+ALTER TABLE `adverts`
+  ADD CONSTRAINT `adverts_advertcat_id_foreign` FOREIGN KEY (`advertcat_id`) REFERENCES `advertcats` (`id`),
+  ADD CONSTRAINT `adverts_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `adverts_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `awards`
+--
+ALTER TABLE `awards`
+  ADD CONSTRAINT `awards_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `awards_game_id_foreign` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`),
+  ADD CONSTRAINT `awards_team_id_foreign` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`),
+  ADD CONSTRAINT `awards_tournament_id_foreign` FOREIGN KEY (`tournament_id`) REFERENCES `tournaments` (`id`),
+  ADD CONSTRAINT `awards_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `comments_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `countries`
+--
+ALTER TABLE `countries`
+  ADD CONSTRAINT `countries_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `countries_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `cups`
+--
+ALTER TABLE `cups`
+  ADD CONSTRAINT `cups_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `cups_game_id_foreign` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`),
+  ADD CONSTRAINT `cups_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `cups_matches`
+--
+ALTER TABLE `cups_matches`
+  ADD CONSTRAINT `cups_matches_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `cups_matches_cup_id_foreign` FOREIGN KEY (`cup_id`) REFERENCES `cups` (`id`),
+  ADD CONSTRAINT `cups_matches_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `cups_teams`
+--
+ALTER TABLE `cups_teams`
+  ADD CONSTRAINT `cups_teams_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `cups_teams_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `downloadcats`
+--
+ALTER TABLE `downloadcats`
+  ADD CONSTRAINT `downloadcats_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `downloadcats_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `downloads`
+--
+ALTER TABLE `downloads`
+  ADD CONSTRAINT `downloads_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `downloads_downloadcat_id_foreign` FOREIGN KEY (`downloadcat_id`) REFERENCES `downloadcats` (`id`),
+  ADD CONSTRAINT `downloads_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `events`
+--
+ALTER TABLE `events`
+  ADD CONSTRAINT `events_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `events_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `forums`
+--
+ALTER TABLE `forums`
+  ADD CONSTRAINT `forums_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `forums_forum_id_foreign` FOREIGN KEY (`forum_id`) REFERENCES `forums` (`id`),
+  ADD CONSTRAINT `forums_latest_thread_id_foreign` FOREIGN KEY (`latest_thread_id`) REFERENCES `forum_threads` (`id`),
+  ADD CONSTRAINT `forums_team_id_foreign` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`),
+  ADD CONSTRAINT `forums_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `forum_posts`
+--
+ALTER TABLE `forum_posts`
+  ADD CONSTRAINT `forum_posts_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `forum_posts_thread_id_foreign` FOREIGN KEY (`thread_id`) REFERENCES `forum_threads` (`id`),
+  ADD CONSTRAINT `forum_posts_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `forum_reports`
+--
+ALTER TABLE `forum_reports`
+  ADD CONSTRAINT `forum_reports_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `forum_reports_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `forum_posts` (`id`),
+  ADD CONSTRAINT `forum_reports_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `forum_threads`
+--
+ALTER TABLE `forum_threads`
+  ADD CONSTRAINT `forum_threads_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `forum_threads_forum_id_foreign` FOREIGN KEY (`forum_id`) REFERENCES `forums` (`id`),
+  ADD CONSTRAINT `forum_threads_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `galleries`
+--
+ALTER TABLE `galleries`
+  ADD CONSTRAINT `galleries_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `galleries_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `games`
+--
+ALTER TABLE `games`
+  ADD CONSTRAINT `games_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `games_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `images`
+--
+ALTER TABLE `images`
+  ADD CONSTRAINT `images_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `images_gallery_id_foreign` FOREIGN KEY (`gallery_id`) REFERENCES `galleries` (`id`),
+  ADD CONSTRAINT `images_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `maps`
+--
+ALTER TABLE `maps`
+  ADD CONSTRAINT `maps_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `maps_game_id_foreign` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`),
+  ADD CONSTRAINT `maps_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `matches`
+--
+ALTER TABLE `matches`
+  ADD CONSTRAINT `matches_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `matches_game_id_foreign` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`),
+  ADD CONSTRAINT `matches_left_team_id_foreign` FOREIGN KEY (`left_team_id`) REFERENCES `teams` (`id`),
+  ADD CONSTRAINT `matches_right_team_id_foreign` FOREIGN KEY (`right_team_id`) REFERENCES `opponents` (`id`),
+  ADD CONSTRAINT `matches_tournament_id_foreign` FOREIGN KEY (`tournament_id`) REFERENCES `tournaments` (`id`),
+  ADD CONSTRAINT `matches_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `match_scores`
+--
+ALTER TABLE `match_scores`
+  ADD CONSTRAINT `match_scores_map_id_foreign` FOREIGN KEY (`map_id`) REFERENCES `maps` (`id`),
+  ADD CONSTRAINT `match_scores_match_id_foreign` FOREIGN KEY (`match_id`) REFERENCES `matches` (`id`);
+
+--
+-- Constraints for table `messages`
+--
+ALTER TABLE `messages`
+  ADD CONSTRAINT `messages_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `messages_receiver_id_foreign` FOREIGN KEY (`receiver_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `messages_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `navigations`
+--
+ALTER TABLE `navigations`
+  ADD CONSTRAINT `navigations_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `navigations_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `news`
+--
+ALTER TABLE `news`
+  ADD CONSTRAINT `news_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `news_newscat_id_foreign` FOREIGN KEY (`newscat_id`) REFERENCES `newscats` (`id`),
+  ADD CONSTRAINT `news_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `newscats`
+--
+ALTER TABLE `newscats`
+  ADD CONSTRAINT `newscats_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `newscats_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `opponents`
+--
+ALTER TABLE `opponents`
+  ADD CONSTRAINT `opponents_country_id_foreign` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`),
+  ADD CONSTRAINT `opponents_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `opponents_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `pagecats`
+--
+ALTER TABLE `pagecats`
+  ADD CONSTRAINT `pagecats_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `pagecats_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `pages`
+--
+ALTER TABLE `pages`
+  ADD CONSTRAINT `pages_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `pages_pagecat_id_foreign` FOREIGN KEY (`pagecat_id`) REFERENCES `pagecats` (`id`),
+  ADD CONSTRAINT `pages_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `partnercats`
+--
+ALTER TABLE `partnercats`
+  ADD CONSTRAINT `partnercats_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `partnercats_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `partners`
+--
+ALTER TABLE `partners`
+  ADD CONSTRAINT `partners_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `partners_partnercat_id_foreign` FOREIGN KEY (`partnercat_id`) REFERENCES `partnercats` (`id`),
+  ADD CONSTRAINT `partners_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `ratings`
+--
+ALTER TABLE `ratings`
+  ADD CONSTRAINT `ratings_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `servers`
+--
+ALTER TABLE `servers`
+  ADD CONSTRAINT `servers_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `servers_game_id_foreign` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`),
+  ADD CONSTRAINT `servers_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `shouts`
+--
+ALTER TABLE `shouts`
+  ADD CONSTRAINT `shouts_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `slidecats`
+--
+ALTER TABLE `slidecats`
+  ADD CONSTRAINT `slidecats_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `slidecats_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `slides`
+--
+ALTER TABLE `slides`
+  ADD CONSTRAINT `slides_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `slides_slidecat_id_foreign` FOREIGN KEY (`slidecat_id`) REFERENCES `slidecats` (`id`),
+  ADD CONSTRAINT `slides_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `streams`
+--
+ALTER TABLE `streams`
+  ADD CONSTRAINT `streams_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `streams_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `teamcats`
+--
+ALTER TABLE `teamcats`
+  ADD CONSTRAINT `teamcats_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `teamcats_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `teams`
+--
+ALTER TABLE `teams`
+  ADD CONSTRAINT `teams_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `teams_teamcat_id_foreign` FOREIGN KEY (`teamcat_id`) REFERENCES `teamcats` (`id`),
+  ADD CONSTRAINT `teams_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `tournaments`
+--
+ALTER TABLE `tournaments`
+  ADD CONSTRAINT `tournaments_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `tournaments_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `user_activities`
+--
+ALTER TABLE `user_activities`
+  ADD CONSTRAINT `user_activities_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `videos`
+--
+ALTER TABLE `videos`
+  ADD CONSTRAINT `videos_creator_id_foreign` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `videos_updater_id_foreign` FOREIGN KEY (`updater_id`) REFERENCES `users` (`id`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
