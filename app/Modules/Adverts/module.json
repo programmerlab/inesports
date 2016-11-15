@@ -1,0 +1,11 @@
+{
+    "slug": "Adverts",
+    "enabled": true,
+    "admin-nav": [
+        {
+            "icon": "bullhorn",
+            "category": 2,
+            "position": 6
+        }
+    ]
+}

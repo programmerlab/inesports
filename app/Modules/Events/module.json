@@ -1,0 +1,12 @@
+{
+    "slug": "Events",
+    "enabled": true,
+    "search": ["events"],
+    "admin-nav": [
+        {
+            "icon": "calendar",
+            "category": 1,
+            "position": 4
+        }
+    ]
+}
